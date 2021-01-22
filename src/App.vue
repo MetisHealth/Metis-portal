@@ -19,7 +19,7 @@
           <a :class="{'bg-transparent dark-mode:bg-transparent': selected != 'logout', 'bg-gray-200 dark-mode:text-white dark-mode:bg-gray-600': selected=='logout'}" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:hover:bg-gray-600 dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:outline-none focus:shadow-outline" @click="selectPage('logout')">Log Out</a>
         </nav>
       </div>
-      <router-view class="flex-1 w-5/6"></router-view>
+      <router-view :locale="locale" class="flex-1 w-5/6"></router-view>
     </div>
 </template>
 
@@ -27,6 +27,7 @@
 import Vue from 'vue'
 import { StorageManagement } from "@sebgroup/frontend-tools";
 import router from './router'
+import axios from 'axios'
 
 export default Vue.extend({ 
   data: function() {
@@ -36,7 +37,8 @@ export default Vue.extend({
         role: "DOCTOR",
         hideSidebar: false,
         loggedin: false,
-        token: ""
+        token: "",
+        locale: ""
       }
   },
   methods: {
@@ -56,14 +58,30 @@ export default Vue.extend({
 
 
   },
-  created(){
+  async created(){
       const localStorage = new StorageManagement("LOCAL");
       if(localStorage.getItem("JWT") == null){
           this.loggedin = false;
           router.push("/login"); 
           return;
       }
-      this.loggedin = true;
+      try{
+         const response = await axios.get('http://localhost:9090/profile',{
+             headers : {
+                'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
+             }
+         })
+          console.log(response);
+         if(response.data.code == 200){
+            this.locale = response.data.user.locale;
+            this.loggedin = true;
+         }else{
+            this.loggedin = false;
+         }
+      }catch(err){
+          console.log(err);
+          this.loggedin = false;
+      }
       this.token = localStorage.getItem("JWT"); 
   }
 })

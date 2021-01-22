@@ -182,7 +182,31 @@ export default {
                 console.log("ERROR PLACEHOLDER");
                 failureCallback(err)
              });
-          }
+          },
+        updateAspectRatio: function(){
+            var w = this.$refs.calendarContainer.clientWidth;
+            var h = this.$refs.calendarContainer.clientHeight;
+            if(w < 640){
+                this.$refs.fullCalendar.getApi().changeView('timeGridDay')
+                this.$refs.fullCalendar.getApi().setOption('aspectRatio', w / h + 0.04)
+                return;
+            }
+            this.$refs.fullCalendar.getApi().setOption('aspectRatio', w / h + 0.15)
+        }
+    },
+    watch: {
+        locale: function(newLocale, _){ // eslint-disable-line no-unused-vars
+            this.$refs.fullCalendar.getApi().setOption('locale', newLocale)
+        }
+    },
+    created() {
+        window.addEventListener("resize", this.updateAspectRatio);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.updateAspectRatio);
+    },
+    mounted() {
+        this.updateAspectRatio()
     }
 } 
 

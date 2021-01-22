@@ -1,31 +1,29 @@
 import Vue from 'vue'
-import Calendar from '../views/Calendar.vue'
-import Patients from '../views/Patients.vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/calendar',
+    path: 'calendar',
     name: 'Calendar',
-    component: Calendar
+    component: () => import('../views/Calendar.vue'),
+    props: true
   },
   {
-    path: '/patients',
+    path: 'patients',
     name: 'Patients',
-    component: Patients
+    component: () => import('../views/Patients.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: () => import('../views/Login.vue')
   },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
