@@ -7,7 +7,8 @@
 <script>
 import LoginForm from '@/components/LoginForm.vue'; 
 
-export default{
+export default {
+    name: "Login",
     components : {
         LoginForm
     }

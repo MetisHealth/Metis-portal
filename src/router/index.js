@@ -5,20 +5,20 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: 'calendar',
+    path: '/calendar',
     name: 'Calendar',
     component: () => import('../views/Calendar.vue'),
     props: true
   },
   {
-    path: 'patients',
+    path: '/patients',
     name: 'Patients',
     component: () => import('../views/Patients.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue')
+    path: '/disabled',
+    name: 'Disabled',
+    component: () => import('../views/Disabled.vue')
   },
 ]
 

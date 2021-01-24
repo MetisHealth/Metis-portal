@@ -1,7 +1,7 @@
 <template>
   <div class="calendar w-full h-screen" ref="calendarContainer">
       <AppointmentModal @createdEvent="createdEvent" class="z-5" ref="newAppointmentModal"/>
-      <FullCalendar class="z-0 w-full px-12 py-5" ref="fullCalendar" :options="calendarOptions" />
+      <FullCalendar class="z-0 w-full px-3 md:px-12 py-5" ref="fullCalendar" :options="calendarOptions" />
       <div v-on-clickaway="hidePopover" ref="popoverRef" v-bind:class="{'hidden': !popoverShow, 'block': popoverShow}" class="border-2 w-48 border-gray-200 bg-white border-0 mr-3 block z-50 font-normal leading-normal text-sm text-left no-underline break-words rounded-lg">
         <div>
           <div data-popper-arrow></div>

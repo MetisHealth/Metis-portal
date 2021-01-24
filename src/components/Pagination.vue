@@ -62,10 +62,12 @@
                 if(this.pages <= 3){
                     return [...Array(this.pages).keys()].map((x) => { return this.pages  + x })
                 }
-                if(this.pages - this.currentPage < 3){
+                else if(this.pages - this.currentPage < 3){
                     return [...Array(3).keys()].map((x) => { return this.pages - (2 - x) })
+                }else if(this.currentPage < 3){
+                    return [1, 2, 3]
                 }
-                return [...Array(3).keys()].map((x) => { return this.currentPage + x })
+                return [...Array(3).keys()].map((x) => { return this.currentPage + x - 1})
             }
         },
         methods: {

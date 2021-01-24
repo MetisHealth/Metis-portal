@@ -360,8 +360,8 @@
                   <option :value="(hour-1).toString()" @click="setHour(hour-1)" v-for="hour in 25" :key="hour">{{ pad(hour-1) }}</option>
                 </select>
                 <span class="text-xl mr-1 ml-1">:</span>
-                <select name="minutes" class="bg-transparent text-xl font-medium appearance-none outline-none">
-                  <option :value="(minute-1).toString()" @click="setMinute(minute-1)" :key="minute" v-for="minute in 60">{{ pad(minute-1) }}</option>
+                <select v-model="minute" name="minutes" class="bg-transparent text-xl font-medium appearance-none outline-none">
+                  <option :value="m - 1" @click="setMinute(m-1)" :key="m" v-for="m in 60">{{ pad(m-1) }}</option>
                 </select>
               </div>
               <hr>
@@ -406,7 +406,7 @@ dayjs.extend(isSameOrAfter)
 let handleOutsideClick
 
 export default {
-  name: 'VueTailwindDatetimePicker',
+  name: 'DatetimePicker',
   beforeCreated() {
     dayjs.locale(this.$props.lang)
   },
@@ -509,7 +509,7 @@ export default {
     formatDate: {
       type: String,
       required: false,
-      default: 'YYYY-MM-DDTHH:mmZ',
+      default: 'YYYY-MM-DDTHH:mm',
     },
     // Confused with this
     formatDisplay: {
@@ -613,7 +613,8 @@ export default {
       showPicker,
       months,
       years,
-      hours: 12,
+      hours: startDatepicker.hour(),
+      minute: startDatepicker.minute(),
       today,
       closed: false
     }
@@ -713,6 +714,7 @@ export default {
   },
   methods: {
     hide() {
+      this.emit();
       this.closed = true
       this.showPicker = false
     },
@@ -724,7 +726,6 @@ export default {
     },
     changePicker(date) {
       this.today = date
-      this.emit()
       this.showPicker = !this.showPicker
     },
     onPrevious() {
@@ -737,7 +738,6 @@ export default {
         } else {
           this.today = this.startDatepicker
         }
-        this.emit()
       }
     },
     onNext() {
@@ -750,7 +750,6 @@ export default {
         } else {
           this.today = this.endDatepicker
         }
-        this.emit()
       }
     },
     possibleStartDate(date) {
@@ -793,16 +792,13 @@ export default {
       } else {
         this.today = this.startDatepicker
       }
-      this.emit()
       this.toggleMonth()
     },
     setHour(hour) {
       this.today = this.today.set('hour', hour)
-      this.emit()
     },
     setMinute(minute) {
       this.today = this.today.set('minute', minute)
-      this.emit()
     },
     setYear(year) {
       if (this.possibleDate(this.today.set('year', year))) {
@@ -810,7 +806,6 @@ export default {
       } else {
         this.today = this.startDatepicker
       }
-      this.emit()
       this.toggleYear()
     },
     onAway() {

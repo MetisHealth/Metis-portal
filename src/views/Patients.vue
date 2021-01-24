@@ -1,11 +1,12 @@
 <template>
   <div class="flex-col flex content-center py-3 mx-auto">
-    <PatientSearchField class=" md:w-4/6 md:mx-auto" @fieldsUpdated="search" title="Patient"/>
+    <PatientSearchField @new="showEmptyPatientModal" class=" md:w-4/6 md:mx-auto" @fieldsUpdated="search" title="Patient"/>
     <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/> 
     <div class="md:w-4/6 md:mx-auto md:h-1/4 border-gray-200 md:border-t md:border-b rounded-md md:overflow-auto">
-        <PatientCard @click="showModal(patient)" @change-password="showPasswordModal" @check-covid="checkCovid" @delete-patient="deletePatient" :class="{'rounded-t-md': index == 0, 'rounded-b-md': index == searchFields.pageSize - 1}" class="border border-gray-200 p-2" :key="patient.id" v-for="(patient, index) in patients" :patient="patient"/>
+        <PatientCard @showModal="showModal" @change-password="showPasswordModal" @check-covid="checkCovid" @delete-patient="deletePatient" :class="{'rounded-t-md': index == 0, 'rounded-b-md': index == searchFields.pageSize - 1}" class="border border-gray-200 p-2" :key="patient.id" v-for="(patient, index) in patients" :patient="patient"/>
     </div>
-    <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/> 
+    <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/>
+    <PatientModal class="z-5" ref="patientModal"/>
   </div>
 </template>
 
@@ -14,10 +15,12 @@ import PatientSearchField from '@/components/PatientSearchField'
 import PatientCard from '@/components/PatientCard'
 import Pagination from '@/components/Pagination'
 import axios from 'axios';
+import PatientModal from "@/components/PatientModal";
 
 export default {
     name: "Patients",
     components: {
+      PatientModal,
         PatientSearchField,
         Pagination,
         PatientCard
@@ -77,7 +80,11 @@ export default {
             console.log(patient);
         },
         showModal: function(patient){
-            console.log(patient);
+          this.$refs.patientModal.showPatient(patient);
+          console.log(patient);
+        },
+        showEmptyPatientModal: function(){
+          this.$refs.patientModal.emptyModal();
         }
     },
     mounted(){

@@ -30,7 +30,7 @@ import ClickOutside from 'vue-click-outside'
 //import './css/tailwind.css' // Development only
 
 export default {
-  name: "VueTailwindcssTypeahead",
+  name: "Typeahead",
   directives: {
       ClickOutside
   },
