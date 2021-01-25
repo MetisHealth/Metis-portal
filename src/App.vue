@@ -31,7 +31,6 @@
 import Vue from 'vue'
 import Login from "@/views/Login"
 import router from './router'
-import axios from 'axios'
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default Vue.extend({
@@ -62,7 +61,7 @@ export default Vue.extend({
           this.loggedin = state;
           if(state) {
             router.push("/calendar")
-            axios.get('http://localhost:9090/profile', {
+            this.$axios.get('/profile', {
               headers: {
                 'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
               }
@@ -86,7 +85,7 @@ export default Vue.extend({
           return;
       }
       try{
-         const response = await axios.get('http://localhost:9090/profile',{
+         const response = await this.$axios.get('/profile',{
              headers : {
                 'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
              }

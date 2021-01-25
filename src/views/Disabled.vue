@@ -9,7 +9,6 @@
 
 <script>
 import DisabledCard from "@/components/DisabledCard";
-import axios from "axios";
 
 export default {
   name: "Disabled",
@@ -21,7 +20,7 @@ export default {
   },
   methods: {
     updateRule: function(rule){
-      axios.post('http://localhost:9090/disabled/update', rule.obj,{
+      this.$axios.post('/disabled/update', rule.obj,{
         headers: {
           'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
         }
@@ -31,7 +30,7 @@ export default {
       })
     },
     createRule: function(rule){
-      axios.post('http://localhost:9090/disabled', rule.obj,{
+      this.$axios.post('/disabled', rule.obj,{
         headers: {
           'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
         }
@@ -42,7 +41,7 @@ export default {
       })
     },
     deleteRule: function(rule){
-      axios.get('http://localhost:9090/disabled/delete', {
+      this.$axios.get('/disabled/delete', {
         params: {
           id: rule.obj.id
         },
@@ -56,7 +55,7 @@ export default {
     },
   },
   mounted(){
-    axios.get('http://localhost:9090/disabled/rules', {
+    this.$axios.get('/disabled/rules', {
       headers: {
         'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
       }

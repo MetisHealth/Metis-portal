@@ -32,7 +32,6 @@ import AppointmentModal from '@/components/AppointmentModal'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from '@fullcalendar/interaction'
-import axios from 'axios';
 import { mixin as clickaway } from 'vue-clickaway';
 import Popper from "popper.js";
 
@@ -86,7 +85,7 @@ export default {
           this.calendarElementClickedLast = false
         },
         deleteAppointment: function(){
-            axios.post('http://localhost:9090/appointments/delete',this.selectedEvent.extendedProps.appObj,{
+            this.$axios.post('/delete',this.selectedEvent.extendedProps.appObj,{
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
                 },
@@ -114,7 +113,7 @@ export default {
             console.log(info)
         },
         getEvents: function(info, successCallback, failureCallback){
-            axios.get('http://localhost:9090/appointments', {
+            this.$axios.get('/appointments', {
                 params: {
                     start: info.startStr,
                     end: info.endStr
@@ -152,7 +151,7 @@ export default {
              });
         },
         getDisabled: function(info, successCallback, failureCallback){
-            axios.get('http://localhost:9090/disabled', {
+            this.$axios.get('/disabled', {
                 params: {
                     start: info.startStr,
                     end: info.endStr

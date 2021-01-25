@@ -14,7 +14,6 @@
 import PatientSearchField from '@/components/PatientSearchField'
 import PatientCard from '@/components/PatientCard'
 import Pagination from '@/components/Pagination'
-import axios from 'axios';
 import PatientModal from "@/components/PatientModal";
 
 export default {
@@ -42,7 +41,7 @@ export default {
     methods: {
         pageChanged: function(page){
             this.searchFields.page = page - 1;
-            axios.get('http://localhost:9090/patients', {
+            this.$axios.get('/patients', {
                 params: this.searchFields,
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
@@ -55,7 +54,7 @@ export default {
         search: function(fields){
             this.searchFields = fields;
             this.searchFields.page = 0;
-            axios.get('http://localhost:9090/patients', {
+            this.$axios.get('/patients', {
                 params: this.searchFields,
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
@@ -88,7 +87,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:9090/patients', {
+        this.$axios.get('/patients', {
             params: this.searchFields,
             headers: {
                 'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
