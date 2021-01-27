@@ -6,7 +6,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL
+axios.defaults.baseURL = 'https://api.metisapp.net'
 
 const options = {
 };
@@ -14,9 +14,9 @@ const options = {
 Vue.use(Toast, options);
 
 //Devtools variables
-Vue.config.performance = process.env.NODE_ENV !== 'production'
-Vue.config.development = process.env.NODE_ENV !== 'production'
-Vue.config.productionTip = process.env.NODE_ENV !== 'production'
+Vue.config.performance = process.env.NODE_ENV !== 'travis'
+Vue.config.development = process.env.NODE_ENV !== 'travis'
+Vue.config.productionTip = process.env.NODE_ENV !== 'travis'
 
 new Vue({
   router,
