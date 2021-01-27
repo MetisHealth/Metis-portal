@@ -44,8 +44,8 @@
                       </Typeahead>
                 </div>
                 <div class="flex flex-col">
-                  <label class="leading-loose">Event Description</label>
-                  <input type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Optional">
+                  <label class="leading-loose">Description</label>
+                  <input v-model="description" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Optional">
                 </div>
                 <div class="flex flex-col">
                     <label class="inline-flex items-center mt-3">
@@ -86,7 +86,8 @@ export default{
             online: false,
             showModal: false,
             patient: null,
-            patientSuggestions: []
+            patientSuggestions: [],
+            description: ""
         }
     },
     // Methods
@@ -103,13 +104,19 @@ export default{
                 start: dayjs(this.start, 'YYYY-MM-DDTHH:mm').toISOString(), 
                 end: dayjs(this.end, 'YYYY-MM-DDTHH:mm').toISOString(), 
                 online: this.online,
-                patient: this.patient
+                patient: this.patient,
+                description: this.description
             }, {
                 headers: {
                  'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
                 }
             }).then((result) =>{
                 console.log(result);
+                if(result.data.code !== 200){
+                  this.$toast.error(result.data.message)
+                  return;
+                }
+                this.$toast.success("Created successfully")
                 this.$emit('createdEvent', {
                     title: result.data.appointment.patient.name,
                     start: result.data.appointment.start,  
@@ -125,6 +132,7 @@ export default{
                     }
                 });
             }).catch((err) => {
+              this.$toast.error("Error occured creating event")
                 console.log(err);
             })
             this.showModal = false;
