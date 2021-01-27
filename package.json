@@ -17,6 +17,7 @@
     "@sebgroup/frontend-tools": "^2.0.2",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@vue-hero-icons/solid": "^1.6.3",
+    "@vue/babel-preset-app": "^4.5.11",
     "@vue/cli-service-global": "^4.5.11",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
