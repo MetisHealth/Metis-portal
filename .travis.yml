@@ -4,6 +4,9 @@ node_js:
 
 install:
   - npm install -g @vue/cli-service
+  - npm install -g @vue/cli-plugin-babel
+  - npm install -g @vue/cli-plugin-unit-jest
+  - npm install -g @vue/cli-plugin-eslint
   - npm install
 
 script: npm run build
