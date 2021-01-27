@@ -11,6 +11,7 @@
           <div class="border-black p-3">
               <p><strong>Name: </strong>{{ selectedEvent.extendedProps.patient.name }}</p>
               <p><strong>Phone: </strong>{{ selectedEvent.extendedProps.patient.phone }}</p>
+              <p v-if="selectedEvent.extendedProps.appObj.description != null" ><strong>Info: </strong>{{ selectedEvent.extendedProps.appObj.description }}</p>
               <p><strong>COVID: </strong>{{ selectedEvent.extendedProps.patient.safe }}</p>
             <div class="w-full flex justify-center mt-2">
               <button @click="deleteAppointment" type="button" class="p-1 z-5 bg-red-400 text-white w-1/2 rounded-md">
@@ -49,7 +50,7 @@ export default {
     data: function(){
             return {
                 calendarElementClickedLast: false, // This solution is not elegant but works nonethelesss
-                selectedEvent : {extendedProps : {patient: {name: "John", phone:"55555", safe:true}, online:false, id:null}}, 
+                selectedEvent : {extendedProps : {patient: {name: "John", phone:"55555", safe:true}, online:false, id:null, appObj: {description: ""}}},
                 popoverShow: false,
                 calendarOptions : {
                     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin],
