@@ -3,7 +3,7 @@ node_js:
   - "node"
 
 install:
-  - npm install -g @vue/cli-service-global
+  - npm install -g @vue/cli-service
   - npm install
 
 script: npm run build
