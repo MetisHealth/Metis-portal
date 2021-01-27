@@ -1,7 +1,4 @@
-language: java
-jdk:
-- oraclejdk11
-
+language: node_js
 branches:
     only:
     - production
