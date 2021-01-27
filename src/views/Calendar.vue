@@ -87,7 +87,7 @@ export default {
           this.calendarElementClickedLast = false
         },
         deleteAppointment: function(){
-            axios.post('/delete',this.selectedEvent.extendedProps.appObj,{
+            axios.post('/appointments/delete',this.selectedEvent.extendedProps.appObj,{
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
                 },
