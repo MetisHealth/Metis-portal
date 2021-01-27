@@ -1,15 +1,13 @@
 language: node_js
 node_js:
-  - "8.6.0"
-  - "node"
+- 8.6.0
+- node
 env:
-  - WEBPACK_VERSION= # Current, from package.json
-  - WEBPACK_VERSION=4
-
+- WEBPACK_VERSION=
+- WEBPACK_VERSION=4
 before_script:
-  - if [[ -n "$WEBPACK_VERSION" ]]; then npm install --no-save webpack@$WEBPACK_VERSION; fi
-
-
+- if [[ -n "$WEBPACK_VERSION" ]]; then npm install --no-save webpack@$WEBPACK_VERSION;
+  fi
 branches:
   only:
   - production
@@ -19,4 +17,4 @@ deploy:
   on:
     branch: production
   api_key:
-    secure: SKDXgS2xwEoZQYtLSsRKiIhnZm0blAQA9UIBpRPB/cQVv3Js9bU9kiJFuOZG3KHFkZIb/j/O12ZvELOJBss6VzrkFSrVk7Jx1ClEFOG7fQoWe9uQHS1Q0ZCTXtdhdBzclooVEeWfFaImV6PT+LTzK1tj326u8Ae5mmM9+BKBiCZmq55MJP84npAb/e3fQ5ZyI1iWses73jInw/6g7tdQ97Lo5LiiKInYJGq/cKrfuAYCtULJxBs5UbE3XUadrkQbMQdQMufp3kMAqMOM7E1Yj9pVL/iuzDYGC9zejiZnKGP4ibK4nlcRP247SSlV6hkrPnZTek7RF60eS93pJWcspA0oeCC1YhSMZbErYL68f0cA04AHfFDnV+L6GEmpZCwWWhR4dorXYdJyIBXi8PbDASUBZpNMe6teNae1gSIDbZrLz1DyDzrDumkc2P8vsMPdqFWRp+/01/J5mYvurTR3TsF9XIKtipkDnoeFY3X6RTtuZPk269+g1Qx+jGJqKT7FrPm1DSHt7nkRmOi9DOdDS7ddd+EgSvuoNqavvWOl1r0bI4JvgmrZEMZJyTNrVtGdrf/5mithj9rn7AUaY/vQ194QkVyvQo/MPMsUBktgAJfUcWo5z1oTryswNf4hkAcdjQbDRxylkvDKZFD4ZH6JNav4OjXwGqqQxSmyg4u3T5M=
+    secure: wnvOFHWxkJjj6N6vdB2nblijocGd3EOl8MehyQsBfTFtACqRDcsIjrdIcIy1g6uGNoXqC367xIwXJUnaM8n5EuG91DjmEiptbON0R3V6jo1F0kRQInpLBKraRNI7CsvVu6SmPy2jxx9W8+CgSJ1fi2Fih9XTKd5OGr/IR2QD1EpHsMt3jhxSudsdx5WumtgF7UjDXQijWpWfIyMbnjWdinpncg6BrqAI1kkYTOMICekbQKqM6MT9m5FC9owt7padwdppfXJc1KtoIqHXEvfrG4lxC5hOCHawOzx7Xs1L2M7wr8Aw70h+GPjnbFwHEa5RPcrrvqYTIRh5EFIzsd2zz7A3LsUnX2DFl0VQu1NL0JJsenYfVc4Fq5EApuJ8aoGIW2FgYyfSmIpA3hc+F7DlkVy7Rb9LDmY23HsVH0LA4+4GlN0ijhcTzp7GDzhK1AW4ro39qIaVmadeAvsnBk9kr4PYqSNg4M8MaU8cKxTjpTTl47BnAGns7DZ81LTohjdPvdOfPhH9eL6olgh4Ueh63imgI5NK/LE79+YKq7jScqRRny5EYtNCOkzerQV0vmnEd3OwuqufffdGKPhGBjzMRHy2e+rzFav7o7r618qkGl5QN2agMZ78qGeZar1j4+YRjuQZ74pnfdjWRahMorZreYNHJeSEf/FX9JH0C15Syu8=
