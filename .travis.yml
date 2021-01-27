@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - "node"
 
+cache: npm
+
 install:
   - npm install -g @vue/cli-service
   - npm install -g @vue/cli-plugin-babel
