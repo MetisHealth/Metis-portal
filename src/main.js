@@ -14,9 +14,9 @@ const options = {
 Vue.use(Toast, options);
 
 //Production variables
-Vue.config.productionTip = false
-Vue.config.devtools = true
-Vue.config.performance = true
+//Vue.config.productionTip = false
+//Vue.config.devtools = true
+//Vue.config.performance = true
 
 new Vue({
   router,
