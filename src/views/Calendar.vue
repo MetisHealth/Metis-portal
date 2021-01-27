@@ -11,7 +11,6 @@
           <div class="border-black p-3">
               <p><strong>Name: </strong>{{ selectedEvent.extendedProps.patient.name }}</p>
               <p><strong>Phone: </strong>{{ selectedEvent.extendedProps.patient.phone }}</p>
-              <p><strong>Info: </strong>{{ selectedEvent.extendedProps.appObj.description }}</p>
               <p><strong>COVID: </strong>{{ selectedEvent.extendedProps.patient.safe }}</p>
             <div class="w-full flex justify-center mt-2">
               <button @click="deleteAppointment" type="button" class="p-1 z-5 bg-red-400 text-white w-1/2 rounded-md">
