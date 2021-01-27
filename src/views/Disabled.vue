@@ -9,6 +9,7 @@
 
 <script>
 import DisabledCard from "@/components/DisabledCard";
+import axios from 'axios'
 
 export default {
   name: "Disabled",
@@ -20,17 +21,20 @@ export default {
   },
   methods: {
     updateRule: function(rule){
-      this.$axios.post('/disabled/update', rule.obj,{
+      axios.post('/disabled/update', rule.obj,{
         headers: {
           'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
         }
       }).then((result) =>{
         this.rules[rule.index] = rule.obj;
         console.log(result)
+      }).catch((err) => {
+        console.log(err);
+        this.$toast.error("Couldn't update rule")
       })
     },
     createRule: function(rule){
-      this.$axios.post('/disabled', rule.obj,{
+      axios.post('/disabled', rule.obj,{
         headers: {
           'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
         }
@@ -38,10 +42,13 @@ export default {
         this.rules.push(rule.obj);
         this.$refs.newRule.disabled = {start: '', duration: '', repetition: ''}
         console.log(result)
+      }).catch((err) => {
+        console.log(err)
+        this.$toast.error("Couldn't create rule")
       })
     },
     deleteRule: function(rule){
-      this.$axios.get('/disabled/delete', {
+      axios.get('/disabled/delete', {
         params: {
           id: rule.obj.id
         },
@@ -51,18 +58,24 @@ export default {
       }).then((result) =>{
         this.rules.splice(rule.index)
         console.log(result)
+      }).catch((err) => {
+        console.log(err)
+        this.$toast.error("Couldn't delete rule")
       })
     },
   },
   mounted(){
-    this.$axios.get('/disabled/rules', {
+    axios.get('/disabled/rules', {
       headers: {
         'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
       }
     }).then((result) =>{
       console.log(result.data)
       this.rules = result.data
-    }) // TODO err handling here as well
+    }).catch((err) => {
+      console.log(err);
+      this.$toast.error("Couldn't fetch rules")
+    })
 
   }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div @click="$emit('showModal', patient)" class="font-sans items-center flex flex-col md:flex-row hover:bg-gray-100">
+    <div @click="$emit('showModal', index)" class="font-sans items-center flex flex-col md:flex-row hover:bg-gray-100">
         <div class="">
             <h5>{{ patient.name }}</h5>
             <p> {{ patient.phone }}</p>

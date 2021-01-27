@@ -3,10 +3,10 @@
     <PatientSearchField @new="showEmptyPatientModal" class=" md:w-4/6 md:mx-auto" @fieldsUpdated="search" title="Patient"/>
     <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/> 
     <div class="md:w-4/6 md:mx-auto md:h-1/4 border-gray-200 md:border-t md:border-b rounded-md md:overflow-auto">
-        <PatientCard @showModal="showModal" @change-password="showPasswordModal" @check-covid="checkCovid" @delete-patient="deletePatient" :class="{'rounded-t-md': index == 0, 'rounded-b-md': index == searchFields.pageSize - 1}" class="border border-gray-200 p-2" :key="patient.id" v-for="(patient, index) in patients" :patient="patient"/>
+        <PatientCard @showModal="showModal" @change-password="showPasswordModal" @check-covid="checkCovid" @delete-patient="deletePatient" :class="{'rounded-t-md': index == 0, 'rounded-b-md': index == searchFields.pageSize - 1}" class="border border-gray-200 p-2" :key="patient.id" v-for="(patient, index) in patients" :patient="patient" :index="index"/>
     </div>
     <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/>
-    <PatientModal class="z-5" ref="patientModal"/>
+    <PatientModal @savePatient="savePatient" class="z-5" ref="patientModal"/>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ import PatientSearchField from '@/components/PatientSearchField'
 import PatientCard from '@/components/PatientCard'
 import Pagination from '@/components/Pagination'
 import PatientModal from "@/components/PatientModal";
+import axios from 'axios'
 
 export default {
     name: "Patients",
@@ -35,13 +36,14 @@ export default {
                 page: 0
             },
             pages: 0,
-            patients: []
-        } 
+            patients: [],
+            patient_index: 0
+        }
     },
     methods: {
         pageChanged: function(page){
             this.searchFields.page = page - 1;
-            this.$axios.get('/patients', {
+            axios.get('/patients', {
                 params: this.searchFields,
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
@@ -49,12 +51,12 @@ export default {
                 }).then((result) =>{
                         console.log(result.data);
                         this.patients = result.data.patients
-                }) 
+                })
         },
         search: function(fields){
             this.searchFields = fields;
             this.searchFields.page = 0;
-            this.$axios.get('/patients', {
+            axios.get('/patients', {
                 params: this.searchFields,
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
@@ -67,27 +69,54 @@ export default {
                         else
                             this.pages = (result.data.patient_num / this.searchFields.pageSize)
 
-                })  // TODO error handling here
+                }).catch((err) => {
+                  console.log(err);
+                  this.$toast.error("Couldn't search")
+                })
         },
         deletePatient: function(patient){
             console.log(patient);
         },
-        showPasswordModal: function(patient){
-            console.log(patient);
-        },
-        checkCovid: function(patient){
-            console.log(patient);
-        },
-        showModal: function(patient){
-          this.$refs.patientModal.showPatient(patient);
-          console.log(patient);
+        showModal: function(index){
+          this.patient_index = index
+          console.log(this.patients[index])
+          this.$refs.patientModal.showPatient(this.patients[index]);
+          console.log(this.patients[index]);
         },
         showEmptyPatientModal: function(){
           this.$refs.patientModal.emptyModal();
+        },
+        savePatient: function(patient){
+          if(patient.id){
+            axios.post('/patients/update', patient,{
+              headers: {
+                'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
+              }
+            } ).then((result) => {
+              this.patients[this.patient_index] = patient
+              console.log(result)
+              this.$toast.success("Patient updated successfully")
+            })
+          }else{
+            axios.post('/patients/create', patient,{
+              headers: {
+                'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
+              }
+            } ).then((result) => {
+              console.log(result)
+              this.$toast.success("Patient created successfully")
+            })
+          }
+        },
+        checkCovid: function(patient){
+          console.log(patient)
+        },
+        showPasswordModal: function(patient){
+          console.log(patient)
         }
     },
     mounted(){
-        this.$axios.get('/patients', {
+        axios.get('/patients', {
             params: this.searchFields,
             headers: {
                 'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
@@ -95,12 +124,15 @@ export default {
             }).then((result) =>{
                     console.log(result.data);
                     this.patients = result.data.patients
-                    if(Math.floor(result.data.patient_num / this.searchFields.pageSize) != result.data.patient_num / this.searchFields.pageSize)
+                    if(Math.floor(result.data.patient_num / this.searchFields.pageSize) !== result.data.patient_num / this.searchFields.pageSize)
                         this.pages = Math.floor(result.data.patient_num / this.searchFields.pageSize) + 1
                     else
                         this.pages = (result.data.patient_num / this.searchFields.pageSize)
 
-            }) // TODO err handling here as well 
+            }).catch((err) => {
+              console.log(err)
+              this.$toast.error("Could not fetch patients")
+            })
 
     }
 } 

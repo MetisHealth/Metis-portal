@@ -33,6 +33,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from '@fullcalendar/interaction'
 import { mixin as clickaway } from 'vue-clickaway';
+import axios from 'axios'
 import Popper from "popper.js";
 
 export default {
@@ -85,14 +86,18 @@ export default {
           this.calendarElementClickedLast = false
         },
         deleteAppointment: function(){
-            this.$axios.post('/delete',this.selectedEvent.extendedProps.appObj,{
+            axios.post('/delete',this.selectedEvent.extendedProps.appObj,{
                 headers: {
                     'Authorization': `Bearer ${window.localStorage.getItem('JWT')}`
                 },
                 }).then((_) => { // eslint-disable-line no-unused-vars
                     this.selectedEvent.remove();
                     this.popoverShow = false;
-                }) 
+                    this.$toast.success("Appointment deleted successfully.")
+                }).catch((err) => {
+                  console.log(err);
+                  this.$toast.error("Couldn't delete appointment");
+            })
         },
         eventClicked: function(info){
             console.log()
@@ -113,7 +118,7 @@ export default {
             console.log(info)
         },
         getEvents: function(info, successCallback, failureCallback){
-            this.$axios.get('/appointments', {
+            axios.get('/appointments', {
                 params: {
                     start: info.startStr,
                     end: info.endStr
@@ -146,12 +151,12 @@ export default {
                 })
             .catch((err) => {
                 console.log(err);
-                console.log("ERROR PLACEHOLDER");
+                this.$toast.error("Error fetching appointments.");
                 failureCallback(err)
              });
         },
         getDisabled: function(info, successCallback, failureCallback){
-            this.$axios.get('/disabled', {
+            axios.get('/disabled', {
                 params: {
                     start: info.startStr,
                     end: info.endStr
@@ -178,7 +183,7 @@ export default {
                 })
             .catch((err) => {
                 console.log(err);
-                console.log("ERROR PLACEHOLDER");
+                this.$toast.error("Error fetching disabled rules.");
                 failureCallback(err)
              });
           },

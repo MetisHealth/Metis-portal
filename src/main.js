@@ -2,14 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import '@/assets/styles/index.css'
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 import axios from "axios";
 
-const axiosConfig = {
-  baseUrl: process.env.VUE_APP_API_BASE_URL,
-  timeout: 30000
-}
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL
 
-Vue.prototype.$axios = axios.create(axiosConfig)
+const options = {
+};
+
+Vue.use(Toast, options);
+
+//Production variables
 Vue.config.productionTip = false
 Vue.config.devtools = true
 Vue.config.performance = true

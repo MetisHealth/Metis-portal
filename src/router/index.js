@@ -20,6 +20,7 @@ const routes = [
     name: 'Disabled',
     component: () => import('../views/Disabled.vue')
   },
+  {path: '/', redirect: '/calendar'}
 ]
 
 const router = new VueRouter({

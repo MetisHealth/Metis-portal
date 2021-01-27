@@ -66,6 +66,7 @@
 
 <script>
 import { StorageManagement, isEmail } from "@sebgroup/frontend-tools";
+import axios from 'axios'
 
 export default  {
     // Data
@@ -90,7 +91,7 @@ export default  {
                 }
                 this.emailValid = true
                 this.loginError = false
-                this.$axios.post('/login', {
+                axios.post('/login', {
                     email: this.email,
                     password: this.password
                   })

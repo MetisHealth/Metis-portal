@@ -70,6 +70,7 @@
 import DatetimePicker from '@/components/DatetimePicker'
 import Typeahead from '@/components/Typeahead';
 import dayjs from 'dayjs'
+import axios from 'axios'
 
 export default{
     components: {
@@ -98,7 +99,7 @@ export default{
             this.showModal = true;
         },
         saveClicked:  function(){
-            this.$axios.post('/appointments', {
+            axios.post('/appointments', {
                 start: dayjs(this.start, 'YYYY-MM-DDTHH:mm').toISOString(), 
                 end: dayjs(this.end, 'YYYY-MM-DDTHH:mm').toISOString(), 
                 online: this.online,
@@ -132,7 +133,7 @@ export default{
             this.patient = entry.patient;
         },
         updatePatientSuggestions: function(searchTerm){
-            this.$axios.get('/patients', {
+            axios.get('/patients', {
             params: {
                 name: searchTerm
             },
