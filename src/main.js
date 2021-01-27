@@ -13,10 +13,10 @@ const options = {
 
 Vue.use(Toast, options);
 
-//Production variables
-//Vue.config.productionTip = false
-//Vue.config.devtools = true
-//Vue.config.performance = true
+//Devtools variables
+Vue.config.performance = process.env.NODE_ENV !== 'production'
+Vue.config.development = process.env.NODE_ENV !== 'production'
+Vue.config.productionTip = process.env.NODE_ENV !== 'production'
 
 new Vue({
   router,
