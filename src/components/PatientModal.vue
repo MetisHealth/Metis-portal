@@ -77,9 +77,11 @@ export default {
   methods: {
     convertTags: function(tags){
       console.log(tags)
-      return this.patient.protocolNumbers = tags.map((x) => {
-        return {number: parseInt(x.text)}
+      let newTags = {}
+      tags.forEach((x) => {
+        newTags[parseInt(x.text)] = new dayjs().format('YYYY-MM-DDTHH:mm:ssZ')
       })
+      return newTags
     },
     showPatient: function(patient){
       this.patient = patient;
@@ -107,12 +109,14 @@ export default {
     },
     tags: function(){
       console.log(this.patient.protocolNumbers)
-      return this.patient.protocolNumbers.map((x) => {
-        return {
-          text: x.number + " (" + dayjs(x.addedDate).format('DD/MM/YYYY') + ")",
+      let tags = []
+      for(const num in this.patient.protocolNumbers){
+        tags.push({
+          text: num.toString() + " (" + dayjs(this.patient.protocolNumbers[num]).format('DD/MM/YYYY') + ")",
           style: "background-color: rgba(29, 78, 216, var(--tw-bg-opacity))"
-        }
-      })
+        })
+      }
+      return tags
     }
   }
 }
