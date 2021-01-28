@@ -195,8 +195,10 @@ export default {
                 this.$refs.fullCalendar.getApi().changeView('timeGridDay')
                 this.$refs.fullCalendar.getApi().setOption('aspectRatio', w / h + 0.04)
                 return;
+            }else{
+              this.$refs.fullCalendar.getApi().changeView('timeGridWeek')
+              this.$refs.fullCalendar.getApi().setOption('aspectRatio', w / h + 0.15)
             }
-            this.$refs.fullCalendar.getApi().setOption('aspectRatio', w / h + 0.15)
         }
     },
     watch: {
