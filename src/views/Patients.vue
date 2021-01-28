@@ -96,6 +96,9 @@ export default {
               this.patients[this.patient_index] = patient
               console.log(result)
               this.$toast.success("Patient updated successfully")
+            }).catch((err) => {
+              console.log(err)
+              this.$toast.error("Couldn't edit patient")
             })
           }else{
             axios.post('/patients/create', patient,{
@@ -105,6 +108,9 @@ export default {
             } ).then((result) => {
               console.log(result)
               this.$toast.success("Patient created successfully")
+            }).catch((err) => {
+              console.log(err)
+              this.$toast.error("Couldn't create patient")
             })
           }
         },

@@ -1,6 +1,6 @@
 <template>
   <div v-if="showModal" class="z-10 modal h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
-    <div class="py-3 sm:max-w-xl sm:mx-auto w-11/12 md:w-1/4">
+    <div class="py-3 sm:max-w-xl sm:mx-auto w-11/12 xl:w-2/4">
       <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
         <div class="max-w-md mx-auto">
           <div class="flex items-center space-x-5">
@@ -13,28 +13,28 @@
           <div class="divide-y divide-gray-200">
             <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
               <div class="flex flex-col items-center space-x-4">
-                <div class="ml-auto w-full flex flex-col">
-                 <label class="leading-loose">Name:</label>
+                <div class="ml-4 w-full flex flex-col md:flex-row md:mb-3">
+                 <label class="leading-loose mr-1">Name:</label>
                  <input v-model="patient.name" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
-                <div class="w-full flex flex-col">
-                  <label class="leading-loose">Phone:</label>
+                <div class="w-full flex flex-col md:flex-row md:mb-3">
+                  <label class="leading-loose mr-1">Phone:</label>
                   <input v-model="patient.phone" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
-                <div class="w-full flex flex-col">
-                  <label class="leading-loose">E-Mail:</label>
+                <div class="w-full flex flex-col md:flex-row md:mb-3">
+                  <label class="leading-loose mr-1">E-Mail:</label>
                   <input v-model="patient.email" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
-                <div class="w-full flex flex-col">
-                  <label class="leading-loose">TC No:</label>
+                <div class="w-full flex flex-col md:flex-row md:mb-3">
+                  <label class="leading-loose mr-1">TC:</label>
                   <input v-model="patient.tcno" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
-                <div class="w-full flex flex-col">
-                  <label class="leading-loose">Hes Code:</label>
+                <div class="w-full flex flex-col md:flex-row md:mb-3">
+                  <label class="leading-loose mr-1">Hes:</label>
                   <input v-model="patient.hescode" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
-                <div class="w-full flex flex-col">
-                  <label class="leading-loose">Protocol Numbers:</label>
+                <div class="w-full flex flex-col md:flex-row md:mb-3">
+                  <label class="leading-loose mr-1">Protocol:</label>
                   <vue-tags-input
                       class="focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                       v-model="tag"
