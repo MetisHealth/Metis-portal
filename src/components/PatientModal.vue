@@ -33,6 +33,15 @@
                   <label class="leading-loose">Hes Code:</label>
                   <input v-model="patient.hescode" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Patient Name">
                 </div>
+                <div class="w-full flex flex-col">
+                  <label class="leading-loose">Protocol Numbers:</label>
+                  <vue-tags-input
+                      class="focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      v-model="tag"
+                      :tags="tags"
+                      @tags-changed="newTags => patient.protocolNumbers = convertTags(newTags)"
+                  />
+                </div>
             </div>
             <div class="pt-4 flex items-center space-x-4">
               <button @click="showModal = false" class="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
@@ -49,17 +58,29 @@
 </template>
 
 <script>
-// TODO protocol number input
+import VueTagsInput from '@johmun/vue-tags-input';
+import dayjs from "dayjs";
+
 export default {
+  components: {
+    VueTagsInput
+  },
   name: "PatientModal",
   data: function(){
     return {
       showModal: false,
       patient: {},
-      button: "Create"
+      button: "Create",
+      tag: ''
     }
   },
   methods: {
+    convertTags: function(tags){
+      console.log(tags)
+      return this.patient.protocolNumbers = tags.map((x) => {
+        return {number: parseInt(x.text)}
+      })
+    },
     showPatient: function(patient){
       this.patient = patient;
       this.showModal = true;
@@ -83,6 +104,15 @@ export default {
       if(this.patient.name === "")
         return "New Patient"
       return this.patient.name
+    },
+    tags: function(){
+      console.log(this.patient.protocolNumbers)
+      return this.patient.protocolNumbers.map((x) => {
+        return {
+          text: x.number + " (" + dayjs(x.addedDate).format('DD/MM/YYYY') + ")",
+          style: "background-color: rgba(29, 78, 216, var(--tw-bg-opacity))"
+        }
+      })
     }
   }
 }
