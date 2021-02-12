@@ -20,6 +20,16 @@ const routes = [
     name: 'Disabled',
     component: () => import('../views/Disabled.vue')
   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
+  },
+  {
+    path: '/oauth/zoom',
+    name: 'ZoomOauth',
+    component: () => import('../views/ZoomOauth.vue')
+  },
   {path: '/', redirect: '/calendar'}
 ]
 

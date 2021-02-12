@@ -1,6 +1,6 @@
 <template>
   <div class="flex-col flex content-center py-3 mx-auto">
-    <PatientSearchField @new="showEmptyPatientModal" class=" md:w-4/6 md:mx-auto" @fieldsUpdated="search" title="Patient"/>
+    <PatientSearchField @new="showEmptyPatientModal" class="md:w-4/6 md:mx-auto" @fieldsUpdated="search" title="Patient"/>
     <Pagination class="h-10 my-8 mx-auto" :pages="pages" :currentPage="searchFields.page + 1" @page-changed="pageChanged"/> 
     <div class="md:w-4/6 md:mx-auto md:h-1/4 border-gray-200 md:border-t md:border-b rounded-md md:overflow-auto">
         <PatientCard @showModal="showModal" @change-password="showPasswordModal" @check-covid="checkCovid" @delete-patient="deletePatient" :class="{'rounded-t-md': index == 0, 'rounded-b-md': index == searchFields.pageSize - 1}" class="border border-gray-200 p-2" :key="patient.id" v-for="(patient, index) in patients" :patient="patient" :index="index"/>

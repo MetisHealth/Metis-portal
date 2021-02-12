@@ -6,7 +6,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:9090' : 'https://api.metisapp.net'
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL
 
 Vue.use(Toast, {});
 

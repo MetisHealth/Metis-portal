@@ -141,6 +141,9 @@ export default{
             this.patient = entry.patient;
         },
         updatePatientSuggestions: function(searchTerm){
+            if(searchTerm.length <= 3){
+              return
+            }
             axios.get('/patients', {
             params: {
                 name: searchTerm
